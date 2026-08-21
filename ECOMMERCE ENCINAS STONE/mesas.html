@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesa de Comedor Personalizable | Encinas Stone</title>
+
+  <!-- Favicon / Logo en Pestaña del Navegador -->
+  <link rel="icon" type="image/png" href="assets/LOGOS/logo%20e%20con%20fondo.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="assets/LOGOS/logo%20e%20con%20fondo.png">
+  <meta name="description" content="Personaliza tu mesa de comedor ideal en Encinas Stone. Previsualización multicapa en tiempo real en piedra natural y carpintería fina.">
+  
+  <!-- Cache-Busting Version Query Parameter for CSS -->
+  <link rel="stylesheet" href="styles.css?v=26.0">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Official Stripe.js v3 SDK -->
+  <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+
+  <!-- Top Announcement Bar (Tesla Style) -->
+  <div class="promo-bar">
+    <span class="promo-badge">Nuevo Lanzamiento</span>
+    <span>Muebles de línea personalizables</span>
+    <strong>| Entregas en Hermosillo, Guaymas, San Carlos y Kino</strong>
+  </div>
+
+  <!-- SVG Filter Definition for Alpha Edge Feathering -->
+  <svg width="0" height="0" style="position:absolute; pointer-events:none; opacity:0;">
+    <filter id="edge-feather">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="0.75" result="blurredAlpha" />
+      <feComposite in="SourceGraphic" in2="blurredAlpha" operator="atop" />
+    </filter>
+  </svg>
+
+  <!-- Navigation Header with Dual Responsive Logo (R2 Desktop, R1 Mobile) -->
+  <header class="main-header">
+    <a href="index.html" class="brand-logo" aria-label="Encinas Stone">
+      <!-- Desktop Logo: Recurso 2.png -->
+      <img src="assets/LOGOS/Recurso%202.png" alt="Encinas Stone" class="header-logo-img logo-desktop">
+      <!-- Mobile Logo: Recurso 1.png -->
+      <img src="assets/LOGOS/Recurso%201.png" alt="Encinas Stone" class="header-logo-img logo-mobile">
+    </a>
+
+    <!-- Mobile Hamburger Toggle Button -->
+    <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Abrir Menú">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <nav class="header-nav" id="main-header-nav">
+      <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Cerrar Menú">&times;</button>
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="mesas.html" class="nav-link active">Mesas</a>
+      <a href="catalogo.html" class="nav-link">Catálogo</a>
+      <a href="materiales.html" class="nav-link">Materiales</a>
+      <a href="proceso.html" class="nav-link">Proceso</a>
+      <button class="contact-btn" id="open-advisor-btn">
+        <i class="fa-solid fa-headset"></i> Asesor Encinas
+      </button>
+    </nav>
+  </header>
+
+  <!-- Main Configurator Split Wrapper -->
+  <main class="configurator-wrapper">
+
+    <!-- Visualizer Stage (Left Column) -->
+    <section class="visualizer-stage" id="visualizer-stage">
+      
+      <!-- Stage Top Header (Title & Subtitle on Left) -->
+      <div class="stage-header">
+        <div class="model-title-badge">
+          <h1 id="selected-model-heading">Mesa 4 Personas</h1>
+          <p class="model-subtitle" id="selected-summary-subtitle">Melamina Rosa Morada (Liso) • Cubierta Melamina Blanca</p>
+        </div>
+      </div>
+
+      <!-- Main Multi-Layered Stage Viewport with Dual Official PNG Dimension Overlays (Largo & Ancho) -->
+      <div class="preview-container">
+        <!-- Left Navigation Arrow (Vista Anterior) -->
+        <button class="stage-arrow-btn stage-arrow-left" id="btn-prev-view" title="Vista Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="layered-stage" id="layered-stage">
+          <!-- Layer 0: Room Background -->
+          <img id="layer-fondo" class="stage-layer layer-fondo" src="assets/FONDOS/AMPLIA FONDO.png" alt="Escenario Encinas Stone">
+          
+          <!-- Layer 0.5: Dynamic Floor Shadow Overlay -->
+          <div id="shadow-floor" class="shadow-layer shadow-floor"></div>
+
+          <!-- Layer 1: Table Base PNG -->
+          <img id="layer-base" class="stage-layer layer-base" src="assets/BASES/AMPLIA ROSA.png" alt="Base de Madera Encinas">
+
+          <!-- Layer 1.5: Under-Countertop Ambient Occlusion Shadow Overlay -->
+          <div id="shadow-top" class="shadow-layer shadow-top"></div>
+
+          <!-- Layer 2: Stone Countertop PNG -->
+          <img id="layer-stone" class="stage-layer layer-stone" src="assets/CUBIERTAS/AMPLIA MEL BLANCA.png" alt="Cubierta de Piedra Encinas">
+
+          <!-- Layer 3: Official PNG Dimension Line LARGO -->
+          <img id="layer-dimension-largo" class="stage-layer layer-dimension-largo" src="assets/CUBIERTAS/Largo%204%20personas.png" alt="Cota Largo Encinas">
+
+          <!-- Layer 4: Official PNG Dimension Line ANCHO -->
+          <img id="layer-dimension-ancho" class="stage-layer layer-dimension-ancho" src="assets/CUBIERTAS/Ancho%204%20personas.png" alt="Cota Ancho Encinas">
+
+          <!-- Floating Bottom Center Camera Controls Pill (Simplified View Labels: Completa, Cubierta, Base) -->
+          <div class="view-controls floating-view-controls">
+            <button class="view-btn active" data-view="AMPLIA">
+              <i class="fa-solid fa-eye"></i> Completa
+            </button>
+            <button class="view-btn" data-view="PICADA">
+              <i class="fa-solid fa-layer-group"></i> Cubierta
+            </button>
+            <button class="view-btn" data-view="BAJA">
+              <i class="fa-solid fa-cubes"></i> Base
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Navigation Arrow (Siguiente Vista) -->
+        <button class="stage-arrow-btn stage-arrow-right" id="btn-next-view" title="Siguiente Vista">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Sidebar Configurator (Right Column - Tesla Design Swatch Layout) -->
+    <aside class="config-sidebar">
+
+      <!-- STEP 1: Capacidad / Medidas -->
+      <div class="config-step-group" id="step-capacidad">
+        <div class="config-section-title">
+          <span><span class="step-number">1</span> Capacidad & Medidas</span>
+        </div>
+
+        <div class="capacity-grid">
+          <div class="capacity-card active" data-capacity="4" data-size-name="Chica">
+            <div class="capacity-num">4</div>
+            <div class="capacity-label">Personas</div>
+            <div class="capacity-dim">130 x 90 cm</div>
+            <div class="capacity-price-tag">$15,950 MXN</div>
+          </div>
+
+          <div class="capacity-card" data-capacity="6" data-size-name="Mediana">
+            <div class="capacity-num">6</div>
+            <div class="capacity-label">Personas</div>
+            <div class="capacity-dim">160 x 100 cm</div>
+            <div class="capacity-price-tag">$19,800 MXN</div>
+          </div>
+
+          <div class="capacity-card" data-capacity="8" data-size-name="Grande">
+            <div class="capacity-num">8</div>
+            <div class="capacity-label">Personas</div>
+            <div class="capacity-dim">230 x 125 cm</div>
+            <div class="capacity-price-tag">$24,100 MXN</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Material de Base -->
+      <div class="config-step-group" id="step-base">
+        <div class="tesla-section-header">
+          <div class="config-section-title">
+            <span><span class="step-number">2</span> Acabado de Base</span>
+          </div>
+          <div class="tesla-selected-row">
+            <span class="tesla-selected-name" id="selected-base-name">Melamina Rosa Morada</span>
+            <span class="tesla-selected-price" id="selected-base-price">Incluido</span>
+          </div>
+        </div>
+
+        <div class="tesla-swatch-row" id="swatch-row-base">
+          <div class="tesla-swatch-item active" data-base-code="ROSA" data-base-name="Melamina Rosa Morada" title="Melamina Rosa Morada">
+            <img src="assets/BASES/BASE ROSA MORADA.png" alt="Melamina Rosa Morada" class="tesla-swatch-img">
+          </div>
+
+          <div class="tesla-swatch-item" data-base-code="MOCZAN" data-base-name="Melamina Moczan" title="Melamina Moczan">
+            <img src="assets/BASES/BASE MOCZAN.png" alt="Melamina Moczan" class="tesla-swatch-img">
+          </div>
+
+          <div class="tesla-swatch-item" data-base-code="POLAR" data-base-name="Melamina Polar" title="Melamina Polar">
+            <img src="assets/BASES/BASE POLAR.png" alt="Melamina Polar" class="tesla-swatch-img">
+          </div>
+
+          <div class="tesla-swatch-item" data-base-code="PAROTA" data-base-name="Parota Natural" title="Parota Natural">
+            <img src="assets/BASES/BASE PAROTA.png" alt="Parota Natural" class="tesla-swatch-img">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Diseño de Base (Liso vs Con Lambrín) -->
+      <div class="config-step-group" id="step-diseno">
+        <div class="config-section-title">
+          <span><span class="step-number">3</span> Diseño de Base</span>
+        </div>
+
+        <div class="design-grid">
+          <div class="design-card active" data-diseno-code="LISO" data-diseno-name="Liso">
+            <div class="design-icon"><i class="fa-solid fa-square"></i></div>
+            <div class="design-info">
+              <div class="design-name">Diseño Liso</div>
+              <div class="design-desc">Estilo minimalista limpio y sobrio.</div>
+            </div>
+            <span class="price-delta-badge badge-included">Incluido</span>
+          </div>
+
+          <div class="design-card" data-diseno-code="LAMBRIN" data-diseno-name="Con Lambrín">
+            <div class="design-icon"><i class="fa-solid fa-bars-staggered"></i></div>
+            <div class="design-info">
+              <div class="design-name">Con Lambrín</div>
+              <div class="design-desc">Detalle acanalado arquitectónico de alta gama.</div>
+            </div>
+            <span class="price-delta-badge material-price-delta">+ $2,600 MXN</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: Cubierta de Piedra Natural / Melamina -->
+      <div class="config-step-group" id="step-cubierta">
+        <div class="tesla-section-header">
+          <div class="config-section-title">
+            <span><span class="step-number">4</span> Cubierta de Piedra / Melamina</span>
+          </div>
+          <div class="tesla-selected-row">
+            <span class="tesla-selected-name" id="selected-stone-name">Melamina Blanca</span>
+            <span class="tesla-selected-price" id="selected-stone-price">Incluido</span>
+          </div>
+        </div>
+
+        <div class="tesla-swatch-row" id="swatch-row-stone">
+          <div class="tesla-swatch-item active" data-stone-code="MEL BLANCA" data-stone-name="Melamina Blanca" title="Melamina Blanca">
+            <img src="assets/CUBIERTAS/CUBIERTA MEL BLANCA.png" alt="Melamina Blanca" class="tesla-swatch-img">
+          </div>
+
+          <div class="tesla-swatch-item" data-stone-code="MEL NEGRA" data-stone-name="Melamina Negra" title="Melamina Negra">
+            <img src="assets/CUBIERTAS/CUBIERTA MEL NEGRA.png" alt="Melamina Negra" class="tesla-swatch-img">
+          </div>
+
+          <div class="tesla-swatch-item" data-stone-code="DALLAS" data-stone-name="Granito Dallas" title="Granito Dallas">
+            <img src="assets/CUBIERTAS/CUBIERTA DALLAS.png" alt="Granito Dallas" class="tesla-swatch-img">
+          </div>
+
+          <div class="tesla-swatch-item" data-stone-code="DIAMOND" data-stone-name="White Diamond" title="White Diamond">
+            <img src="assets/CUBIERTAS/CUBIERTA DIAMOND.png" alt="White Diamond" class="tesla-swatch-img">
+          </div>
+
+          <div class="tesla-swatch-item" data-stone-code="SGABRIEL" data-stone-name="San Gabriel" title="San Gabriel">
+            <img src="assets/CUBIERTAS/CUBIERTA SAN GABRIEL.png" alt="San Gabriel" class="tesla-swatch-img">
+          </div>
+
+          <div class="tesla-swatch-item" data-stone-code="CTT LIGHT" data-stone-name="Calacatta Light" title="Calacatta Light">
+            <img src="assets/CUBIERTAS/CUBIERTA CTT LIGHT.png" alt="Calacatta Light" class="tesla-swatch-img">
+          </div>
+      <!-- SECTION: Especificaciones Técnicas del Producto -->
+      <div class="product-specs-section" id="section-specs">
+        <div class="specs-header">
+          <div class="specs-header-main">
+            <div class="specs-badge-pill">
+              <i class="fa-solid fa-layer-group"></i> Ficha Técnica
+            </div>
+            <h3 class="specs-title">Especificaciones del Producto</h3>
+          </div>
+          <p class="specs-subtitle">Diseño artesanal de alta durabilidad y acabados de lujo.</p>
+        </div>
+
+        <div class="specs-grid">
+          
+          <div class="spec-card">
+            <div class="spec-icon"><i class="fa-solid fa-cube"></i></div>
+            <div class="spec-info">
+              <h4 class="spec-label">Cubiertas & Perfiles</h4>
+              <p class="spec-desc">Placa de 20 mm de espesor tanto en Piedras Naturales (Granitos y Cuarzos) como en Melaminas de alta densidad, engrosada en el contorno con doble tira para lograr 40 mm de vista. Altamente resistentes a rayaduras y al uso diario.</p>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="spec-info">
+              <h4 class="spec-label">Estructura & Base</h4>
+              <p class="spec-desc">Bastidor de acero de alta resistencia recubierto. Acabados en maderas (Rosa Morada, Parota, Polar, Moczan) en formato Liso o Lambrín.</p>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-icon"><i class="fa-solid fa-ruler-combined"></i></div>
+            <div class="spec-info">
+              <h4 class="spec-label">Formatos & Medidas</h4>
+              <p class="spec-desc">
+                • 4 Personas (130 x 90 cm)<br>
+                • 6 Personas (160 x 100 cm)<br>
+                • 8 Personas (230 x 125 cm)
+              </p>
+            </div>
+          </div>
+
+          <div class="spec-card">
+            <div class="spec-icon"><i class="fa-solid fa-truck-ramp-box"></i></div>
+            <div class="spec-info">
+              <h4 class="spec-label">Entrega & Garantía</h4>
+              <p class="spec-desc">Entrega e instalación profesional en Hermosillo, Guaymas, San Carlos y Kino. Incluye <strong>2 Años de Garantía Oficial</strong>.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 5: Opiniones y Reseñas Verificadas de Clientes en Facebook -->
+      <div class="reviews-section" id="section-reviews">
+        <div class="reviews-header">
+          <div class="reviews-header-main">
+            <div class="facebook-badge-pill">
+              <i class="fa-brands fa-facebook-f"></i> Facebook
+            </div>
+            <h3 class="reviews-title">Opiniones de Clientes</h3>
+          </div>
+          <div class="reviews-rating-bar">
+            <div class="stars-gold">★★★★★</div>
+            <span class="rating-number">5.0</span>
+            <span class="rating-label">• 100% Recomendado</span>
+          </div>
+        </div>
+
+        <div class="reviews-feed">
+          
+          <div class="review-card">
+            <div class="review-user-header">
+              <div class="review-avatar avatar-natalia">NP</div>
+              <div class="review-user-info">
+                <div class="review-author-row">
+                  <span class="review-author">Natalia Pavlovich</span>
+                  <i class="fa-solid fa-circle-check verify-badge"></i>
+                </div>
+                <span class="review-recommend"><i class="fa-brands fa-facebook-f fb-mini-icon"></i> recomienda <strong>Encinas Stone</strong></span>
+              </div>
+            </div>
+            <p class="review-text">"Excelente servicio, asesoría y calidad. Seriedad en el cumplimiento de fecha de entrega. ¡Muy recomendado!"</p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-user-header">
+              <div class="review-avatar avatar-mary">MS</div>
+              <div class="review-user-info">
+                <div class="review-author-row">
+                  <span class="review-author">Mary Saavedra</span>
+                  <i class="fa-solid fa-circle-check verify-badge"></i>
+                </div>
+                <span class="review-recommend"><i class="fa-brands fa-facebook-f fb-mini-icon"></i> recomienda <strong>Encinas Stone</strong></span>
+              </div>
+            </div>
+            <p class="review-text">"Muy buen trabajo, muy rápidos, me dijeron en 2 semanas y a la semana y media ya tenían todo el trabajo terminado, muy amable el señor Cesar, super recomendado."</p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-user-header">
+              <div class="review-avatar avatar-gilberto">GO</div>
+              <div class="review-user-info">
+                <div class="review-author-row">
+                  <span class="review-author">Gilberto Ortiz</span>
+                  <i class="fa-solid fa-circle-check verify-badge"></i>
+                </div>
+                <span class="review-recommend"><i class="fa-brands fa-facebook-f fb-mini-icon"></i> recomienda <strong>Encinas Stone</strong></span>
+              </div>
+            </div>
+            <p class="review-text">"Muy buena atencion y claridad en todos los detalles, Cumplen con la fecha o incluso la mejoran, si no quieres batallar con encinas store tu cocina lista estará. Recomendados!!"</p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-user-header">
+              <div class="review-avatar avatar-denisse">DR</div>
+              <div class="review-user-info">
+                <div class="review-author-row">
+                  <span class="review-author">Denisse Ruiz</span>
+                  <i class="fa-solid fa-circle-check verify-badge"></i>
+                </div>
+                <span class="review-recommend"><i class="fa-brands fa-facebook-f fb-mini-icon"></i> recomienda <strong>Encinas Stone</strong></span>
+              </div>
+            </div>
+            <p class="review-text">"Excelente trabajo y atención :) 100% recomendado una de las empresas mas confiable y accesibles de hermosillo."</p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-user-header">
+              <div class="review-avatar avatar-victoria">VV</div>
+              <div class="review-user-info">
+                <div class="review-author-row">
+                  <span class="review-author">Victoria Valdez</span>
+                  <i class="fa-solid fa-circle-check verify-badge"></i>
+                </div>
+                <span class="review-recommend"><i class="fa-brands fa-facebook-f fb-mini-icon"></i> recomienda <strong>Encinas Stone</strong></span>
+              </div>
+            </div>
+            <p class="review-text">"super recomendados! nos instalaron super rápido y muy bien hecho el trabajo 💯"</p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-user-header">
+              <div class="review-avatar avatar-melida">MV</div>
+              <div class="review-user-info">
+                <div class="review-author-row">
+                  <span class="review-author">Melida Vazquez</span>
+                  <i class="fa-solid fa-circle-check verify-badge"></i>
+                </div>
+                <span class="review-recommend"><i class="fa-brands fa-facebook-f fb-mini-icon"></i> recomienda <strong>Encinas Stone</strong></span>
+              </div>
+            </div>
+            <p class="review-text">"Atencion personalizada, rapida y efectiva!!! Aclararon todas mis dudas y muy puntuales en su trabajo!!! Excelente decisión de contratar sus servicios"</p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-user-header">
+              <div class="review-avatar avatar-jorge">JD</div>
+              <div class="review-user-info">
+                <div class="review-author-row">
+                  <span class="review-author">Jorge Luis Durazo Solorzano</span>
+                  <i class="fa-solid fa-circle-check verify-badge"></i>
+                </div>
+                <span class="review-recommend"><i class="fa-brands fa-facebook-f fb-mini-icon"></i> recomienda <strong>Encinas Stone</strong></span>
+              </div>
+            </div>
+            <p class="review-text">"excelente calidad y puntualidad en los trabajos 👌👌👍👍"</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SECTION 6: Preguntas Frecuentes (FAQ Accordion) -->
+      <div class="faq-section" id="section-faq">
+        <div class="faq-header">
+          <div class="faq-header-main">
+            <div class="faq-badge-pill">
+              <i class="fa-solid fa-circle-question"></i> Ayuda
+            </div>
+            <h3 class="faq-title">Preguntas Frecuentes</h3>
+          </div>
+          <p class="faq-subtitle">Resolvemos tus dudas sobre entrega, garantía y materiales.</p>
+        </div>
+
+        <div class="faq-accordion">
+          
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>¿Cuáles son las ciudades con entrega e instalación?</span>
+              <i class="fa-solid fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Ofrecemos entrega e instalación directa en <strong>Hermosillo, Guaymas, San Carlos y Bahía de Kino</strong> (Sonora).</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>¿Cuánto tiempo tarda la fabricación y entrega?</span>
+              <i class="fa-solid fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>El tiempo estimado de fabricación artesanal, ensamblado y pulido es de <strong>15 días hábiles</strong>. Te notificamos en cada avance.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>¿Qué garantía ofrecen las cubiertas de piedra?</span>
+              <i class="fa-solid fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Contamos con <strong>2 Años de Garantía Oficial Encinas Stone</strong>. Nuestras cubiertas de piedra y melamina son altamente resistentes a rayaduras y al uso diario.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>¿Puedo solicitar medidas o acabados especiales?</span>
+              <i class="fa-solid fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>¡Por supuesto! Diseñamos proyectos a la medida. Puedes dar clic en <strong>"Asesor Encinas"</strong> o contactarnos por WhatsApp al <strong>662 413 4300</strong>.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>¿Cuáles son los métodos de pago aceptados?</span>
+              <i class="fa-solid fa-chevron-down faq-icon"></i>
+            </button>
+            <div class="faq-answer">
+              <p>Aceptamos <strong>tarjetas de crédito y débito</strong> (Visa, Mastercard, AMEX) con cobro seguro bancario SSL de Stripe, y pedidos por WhatsApp.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- Sticky Bottom Order Bar -->
+  <div class="sticky-order-bar">
+    <div class="order-summary-brief">
+      <div>
+        <div class="summary-config-title" id="bar-config-title">Mesa 4 Personas</div>
+        <div class="summary-details-text" id="bar-config-details">Melamina Rosa Morada (Liso) • Cubierta Melamina Blanca</div>
+      </div>
+
+      <div class="delivery-badge">
+        <i class="fa-solid fa-truck-fast"></i>
+        <span>Entrega estimada: 15 días</span>
+      </div>
+    </div>
+
+    <div class="order-actions">
+      <div class="price-container">
+        <div class="price-label">Precio de Compra</div>
+        <div class="total-price" id="bar-total-price">$15,950 MXN</div>
+      </div>
+
+      <button class="btn-order-primary" id="btn-open-quote">
+        <span>Ordenar</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal: Formulario de Orden & Pasarela de Pago Stripe Elements -->
+  <div class="modal-overlay" id="quote-modal">
+    <div class="modal-card modal-checkout-card">
+      <button class="modal-close" class="close-modal-btn">&times;</button>
+
+      <div class="checkout-header">
+        <h2 class="modal-title">Checkout Seguro Encinas Stone</h2>
+        <p class="modal-subtitle">Procesa tu pedido con garantía oficial y encriptación bancaria SSL 256-Bit.</p>
+      </div>
+
+      <!-- Live Order Brief Box inside Modal -->
+      <div class="modal-order-summary-box">
+        <div class="summary-item-title" id="modal-summary-title">Mesa 4 Personas (130 x 90 cm)</div>
+        <div class="summary-item-price" id="modal-summary-price">$15,950 MXN</div>
+        <div class="summary-item-sub" id="modal-summary-details">Base: Melamina Rosa Morada (Liso) • Cubierta: Melamina Blanca</div>
+        <div class="summary-delivery-row">
+          <i class="fa-solid fa-truck"></i> Cobertura de entrega local incluida (Hermosillo, Guaymas, San Carlos, Kino)
+        </div>
+      </div>
+
+      <!-- Payment Method Selection Tabs -->
+      <div class="payment-tabs">
+        <button class="tab-btn active" data-tab="stripe-tab">
+          <i class="fa-solid fa-shield-halved"></i> Pago Seguro
+        </button>
+        <button class="tab-btn" data-tab="whatsapp-tab">
+          <i class="fa-brands fa-whatsapp"></i> Pedido por WhatsApp
+        </button>
+      </div>
+
+      <!-- TAB 1: Stripe Payment Form (Custom Payment Flow / Stripe Elements) -->
+      <div class="tab-content active" id="stripe-tab">
+        <form id="stripe-payment-form">
+          <div class="form-row-2col">
+            <div class="form-group">
+              <label for="stripe-client-name">Nombre Completo</label>
+              <input type="text" id="stripe-client-name" class="form-input" placeholder="Ej. Ana Encinas" required>
+            </div>
+            <div class="form-group">
+              <label for="stripe-client-phone">Teléfono / WhatsApp</label>
+              <input type="tel" id="stripe-client-phone" class="form-input" placeholder="Ej. 662 123 4567" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="stripe-client-city">Ciudad de Entrega</label>
+            <select id="stripe-client-city" class="form-input" required>
+              <option value="Hermosillo">Hermosillo, Sonora</option>
+              <option value="Guaymas">Guaymas, Sonora</option>
+              <option value="San Carlos">San Carlos, Sonora</option>
+              <option value="Bahía de Kino">Bahía de Kino, Sonora</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="stripe-client-address">Dirección de Entrega</label>
+            <input type="text" id="stripe-client-address" class="form-input" placeholder="Calle, Número, Colonia y Código Postal" required>
+          </div>
+
+          <!-- Stripe Credit/Debit Card Encrypted iFrame Container -->
+          <div class="form-group">
+            <label>Datos de Tarjeta de Crédito / Débito <span class="badge-stripe-ssl"><i class="fa-solid fa-lock"></i> 256-Bit SSL</span></label>
+            <div id="stripe-card-element" class="stripe-element-container"></div>
+            <div id="card-errors" class="stripe-error-message" role="alert"></div>
+          </div>
+
+          <div class="accepted-cards-row">
+            <span>Aceptamos:</span>
+            <i class="fa-brands fa-cc-visa"></i>
+            <i class="fa-brands fa-cc-mastercard"></i>
+            <i class="fa-brands fa-cc-amex"></i>
+            <span class="msi-badge-tag"><i class="fa-solid fa-calendar-days"></i> Meses Sin Intereses Disponibles</span>
+          </div>
+
+          <button type="submit" class="form-submit-btn btn-pay-stripe" id="btn-pay-stripe">
+            <i class="fa-solid fa-lock"></i> Pagar <span id="stripe-btn-amount">$15,950 MXN</span> con Stripe
+          </button>
+
+          <p class="stripe-legal-text">
+            <i class="fa-solid fa-shield-check"></i> Pago procesado con seguridad bancaria 3D Secure 2.0. Tus datos jamás se almacenan en nuestro servidor.
+          </p>
+        </form>
+      </div>
+
+      <!-- TAB 2: Direct WhatsApp Order Form -->
+      <div class="tab-content" id="whatsapp-tab">
+        <form id="quote-form">
+          <div class="form-group">
+            <label for="client-name">Nombre Completo</label>
+            <input type="text" id="client-name" class="form-input" placeholder="Ej. Ana Encinas" required>
+          </div>
+
+          <div class="form-group">
+            <label for="client-phone">Teléfono / WhatsApp</label>
+            <input type="tel" id="client-phone" class="form-input" placeholder="Ej. 662 123 4567" required>
+          </div>
+
+          <div class="form-group">
+            <label for="client-city">Ciudad de Entrega</label>
+            <select id="client-city" class="form-input" required>
+              <option value="Hermosillo">Hermosillo, Sonora</option>
+              <option value="Guaymas">Guaymas, Sonora</option>
+              <option value="San Carlos">San Carlos, Sonora</option>
+              <option value="Bahía de Kino">Bahía de Kino, Sonora</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="client-notes">Comentarios adicionales (opcional)</label>
+            <input type="text" id="client-notes" class="form-input" placeholder="Ej. Requiero instalación en segundo piso">
+          </div>
+
+          <button type="submit" class="form-submit-btn" id="btn-share-whatsapp-direct">
+            <i class="fa-brands fa-whatsapp"></i> Finalizar Orden por WhatsApp
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal: Payment Confirmation Success Modal -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-card success-modal-card">
+      <div class="success-icon-wrap">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <h2 class="modal-title text-center">¡Pago Confirmado con Éxito!</h2>
+      <p class="modal-subtitle text-center">Hemos recibido tu orden y tu pago ha sido procesado de forma segura.</p>
+
+      <div class="success-order-details">
+        <div class="success-row">
+          <span>Número de Orden:</span>
+          <strong id="success-order-id">#ENC-84920</strong>
+        </div>
+        <div class="success-row">
+          <span>Monto Pagado:</span>
+          <strong id="success-paid-amount">$15,950 MXN</strong>
+        </div>
+        <div class="success-row">
+          <span>Estatus de Pago:</span>
+          <span class="status-approved-badge"><i class="fa-solid fa-shield-check"></i> Aprobado por Stripe</span>
+        </div>
+      </div>
+
+      <button class="form-submit-btn" id="btn-close-success">
+        <i class="fa-solid fa-check"></i> Entendido
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mobileToggle = document.getElementById('mobile-menu-toggle');
+      const mobileClose = document.getElementById('mobile-menu-close');
+      const headerNav = document.getElementById('main-header-nav');
+
+      if (mobileToggle && headerNav) {
+        mobileToggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          headerNav.classList.add('mobile-active');
+        });
+      }
+
+      if (mobileClose && headerNav) {
+        mobileClose.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          headerNav.classList.remove('mobile-active');
+        });
+      }
+    });
+  </script>
+  <!-- Cache-Busting Version Query Parameter for JS -->
+  <script src="app.js?v=25.0"></script>
+</body>
+</html>

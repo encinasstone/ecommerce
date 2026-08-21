@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Muebles de Línea | Encinas Stone</title>
+
+  <!-- Favicon / Logo en Pestaña del Navegador -->
+  <link rel="icon" type="image/png" href="assets/LOGOS/logo%20e%20con%20fondo.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="assets/LOGOS/logo%20e%20con%20fondo.png">
+
+  <!-- Google Fonts: Playfair Display (Luxury Headers) + Inter (Clean Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="styles.css?v=26.0">
+</head>
+<body>
+
+  <!-- Top Announcement Bar (Tesla Style) -->
+  <div class="promo-bar">
+    <span class="promo-badge">Nuevo Lanzamiento</span>
+    <span>Muebles de línea personalizables</span>
+    <strong>| Entregas en Hermosillo, Guaymas, San Carlos y Kino</strong>
+  </div>
+
+  <!-- Navigation Header with Dual Responsive Logo -->
+  <header class="main-header">
+    <a href="index.html" class="brand-logo" aria-label="Encinas Stone">
+      <img src="assets/LOGOS/Recurso%202.png" alt="Encinas Stone" class="header-logo-img logo-desktop">
+      <img src="assets/LOGOS/Recurso%201.png" alt="Encinas Stone" class="header-logo-img logo-mobile">
+    </a>
+
+    <!-- Mobile Hamburger Toggle Button -->
+    <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Abrir Menú">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <nav class="header-nav" id="main-header-nav">
+      <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Cerrar Menú">&times;</button>
+      <a href="index.html" class="nav-link">Inicio</a>
+      <a href="mesas.html" class="nav-link">Mesas</a>
+      <a href="catalogo.html" class="nav-link active">Catálogo</a>
+      <a href="materiales.html" class="nav-link">Materiales</a>
+      <a href="proceso.html" class="nav-link">Proceso</a>
+      <button class="contact-btn" id="open-advisor-btn">
+        <i class="fa-solid fa-headset"></i> Asesor Encinas
+      </button>
+    </nav>
+  </header>
+
+  <!-- PAGE CONTENT: Catálogo General -->
+  <main class="page-section">
+    <div class="section-container">
+      <div class="section-title-box">
+        <span class="section-tag">Colección Encinas</span>
+        <h1 class="section-main-heading">Catálogo de Productos</h1>
+        <p class="section-main-sub">Explora nuestras piezas de línea personalizables y muebles de diseño exclusivo.</p>
+      </div>
+
+      <div class="catalog-grid">
+        
+        <!-- Producto Principal Disponible -->
+        <div class="catalog-card card-featured">
+          <div class="catalog-card-badge badge-active">Disponible • Personalizable</div>
+          <div class="catalog-card-image">
+            <img src="assets/BASES/AMPLIA ROSA.png" alt="Mesa de Comedor Personalizable">
+          </div>
+          <div class="catalog-card-content">
+            <h3 class="catalog-card-title">Mesa de Comedor Encinas</h3>
+            <p class="catalog-card-desc">Configurable en 4, 6 u 8 personas. Elección de bases de madera (Rosa Morada, Parota) y cubiertas de piedra natural (Granito Dallas, San Gabriel, Cuarzos).</p>
+            <div class="catalog-card-footer">
+              <span class="catalog-card-price">Desde $15,950 MXN</span>
+              <a href="index.html" class="btn-catalog-action btn-active">Personalizar Ahora</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Producto 2: Credenza Agotada -->
+        <div class="catalog-card">
+          <div class="catalog-card-badge badge-soldout">Agotado • Edición Limitada</div>
+          <div class="catalog-card-image placeholder-img">
+            <div class="soldout-overlay"><i class="fa-solid fa-lock"></i> Agotado</div>
+            <img src="assets/BASES/BASE PAROTA.png" alt="Credenza Encinas Parota">
+          </div>
+          <div class="catalog-card-content">
+            <h3 class="catalog-card-title">Credenza Encinas Parota</h3>
+            <p class="catalog-card-desc">Mueble credenza de almacenamiento con cubierta de Granito Dallas y cuerpo en madera maciza de Parota pulida a mano.</p>
+            <div class="catalog-card-footer">
+              <span class="catalog-card-price">$18,500 MXN</span>
+              <button class="btn-catalog-action btn-disabled" disabled>Ver Ficha (Agotado)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Producto 3: Mesa Auxiliar Agotada -->
+        <div class="catalog-card">
+          <div class="catalog-card-badge badge-soldout">Agotado</div>
+          <div class="catalog-card-image placeholder-img">
+            <div class="soldout-overlay"><i class="fa-solid fa-lock"></i> Agotado</div>
+            <img src="assets/CUBIERTAS/CUBIERTA SAN GABRIEL.png" alt="Mesa Auxiliar San Gabriel">
+          </div>
+          <div class="catalog-card-content">
+            <h3 class="catalog-card-title">Mesa Auxiliar San Gabriel</h3>
+            <p class="catalog-card-desc">Mesa lateral con cubierta circular de Granito Negro San Gabriel y estructura geométrica de acero con acabado mate.</p>
+            <div class="catalog-card-footer">
+              <span class="catalog-card-price">$8,900 MXN</span>
+              <button class="btn-catalog-action btn-disabled" disabled>Ver Ficha (Agotado)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Producto 4: Buffetero Agotado -->
+        <div class="catalog-card">
+          <div class="catalog-card-badge badge-soldout">Agotado</div>
+          <div class="catalog-card-image placeholder-img">
+            <div class="soldout-overlay"><i class="fa-solid fa-lock"></i> Agotado</div>
+            <img src="assets/BASES/BASE MOCZAN.png" alt="Buffetero Rosa Morada">
+          </div>
+          <div class="catalog-card-content">
+            <h3 class="catalog-card-title">Buffetero Rosa Morada</h3>
+            <p class="catalog-card-desc">Mueble trinchador contemporáneo con ensamble de lambrín en madera Rosa Morada y cubierta de piedra natural rectificada.</p>
+            <div class="catalog-card-footer">
+              <span class="catalog-card-price">$22,900 MXN</span>
+              <button class="btn-catalog-action btn-disabled" disabled>Ver Ficha (Agotado)</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const mobileClose = document.getElementById('mobile-menu-close');
+    const headerNav = document.getElementById('main-header-nav');
+
+    if (mobileToggle && headerNav) {
+      mobileToggle.addEventListener('click', () => {
+        headerNav.classList.add('mobile-active');
+      });
+    }
+
+    if (mobileClose && headerNav) {
+      mobileClose.addEventListener('click', () => {
+        headerNav.classList.remove('mobile-active');
+      });
+    }
+
+    document.getElementById('open-advisor-btn').addEventListener('click', () => {
+      window.open('https://wa.me/526624134300?text=' + encodeURIComponent('¡Hola Encinas Stone! Deseo consultar información sobre el catálogo de muebles.'), '_blank');
+    });
+  </script>
+
+</body>
+</html>
