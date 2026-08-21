@@ -538,6 +538,15 @@ document.addEventListener('DOMContentLoaded', () => {
       updateUI();
       quoteModal.classList.add('active');
       setTimeout(mountStripeCard, 100);
+
+      // Trigger Meta Pixel InitiateCheckout Event
+      if (window.fbq) {
+        window.fbq('track', 'InitiateCheckout', {
+          value: calculateTotal(),
+          currency: 'MXN',
+          content_name: `Mesa ${state.capacity} Personas`
+        });
+      }
     });
   }
 
@@ -735,6 +744,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
           const orderId = `#ENC-${Math.floor(10000 + Math.random() * 90000)}`;
           const totalAmount = formatMoney(calculateTotal());
+
+          // Trigger Meta Pixel Purchase Event
+          if (window.fbq) {
+            window.fbq('track', 'Purchase', {
+              value: calculateTotal(),
+              currency: 'MXN',
+              content_name: `Mesa ${state.capacity} Personas`,
+              order_id: orderId
+            });
+          }
 
           // Update Success Modal Data
           document.getElementById('success-order-id').textContent = orderId;
