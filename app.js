@@ -634,21 +634,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const addressInput = document.getElementById('stripe-client-address').value.trim();
       const city = document.getElementById('stripe-client-city').value || 'Hermosillo';
 
-      const name = nameInput || 'Carlos Encinas';
-      const phone = phoneInput || '6624134300';
-      const address = addressInput || 'Av. San Carlos #456, Hermosillo';
+      const name = nameInput;
+      const phone = phoneInput;
+      const address = addressInput;
+
+      if (!name || !phone || !address) {
+        if (cardErrors) cardErrors.textContent = 'Por favor completa nombre, teléfono y dirección de entrega.';
+        return;
+      }
 
       const matrix = PRICING_MATRIX[state.capacity];
-      const fullMetadata = {
-        cliente: name,
-        telefono: phone,
-        ciudad: city,
-        direccion: address,
-        modelo: `Mesa ${state.capacity} Personas (${matrix.dimensions})`,
-        acabado_base: `${state.baseName}`,
-        diseno_base: `${state.disenoName}`,
-        cubierta: `${state.stoneName} (20 mm / 40 mm vista)`
-      };
 
       const btnPay = document.getElementById('btn-pay-stripe');
 
@@ -662,58 +657,27 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cardErrors) cardErrors.textContent = '';
 
       try {
-        let clientSecret = null;
+        // El servidor calcula el precio con la tabla oficial; aquí solo se envía la configuración
+        const res = await fetch('/api/create-payment-intent', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            capacity: state.capacity,
+            stoneCode: state.stoneCode,
+            baseCode: state.baseCode,
+            disenoCode: state.disenoCode,
+            name: name,
+            phone: phone,
+            city: city,
+            address: address
+          })
+        });
 
-        // Try Server Endpoint first (Vercel Serverless / Local Ruby)
-        try {
-          const res = await fetch('/api/create-payment-intent', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              amount: calculateTotal() * 100,
-              name: name,
-              description: `Orden Encinas Stone: Mesa ${state.capacity} Personas (${name})`,
-              metadata: fullMetadata
-            })
-          });
-
-          if (res.ok) {
-            const intentData = await res.json();
-            if (intentData.client_secret) {
-              clientSecret = intentData.client_secret;
-            }
-          }
-        } catch (serverErr) {
-          console.log('Server endpoint fetch fallback:', serverErr);
+        const intentData = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error((intentData.error && intentData.error.message) || 'No se pudo iniciar el pago.');
         }
-
-        // Direct Stripe API Fallback
-        if (!clientSecret) {
-          const params = new URLSearchParams();
-          params.append('amount', (calculateTotal() * 100).toString());
-          params.append('currency', 'mxn');
-          params.append('payment_method_types[]', 'card');
-          params.append('description', `Orden Encinas Stone: Mesa ${state.capacity} Personas (${name})`);
-          
-          Object.keys(fullMetadata).forEach(k => {
-            params.append(`metadata[${k}]`, fullMetadata[k]);
-          });
-
-          const directRes = await fetch('https://api.stripe.com/v1/payment_intents', {
-            method: 'POST',
-            headers: {
-              'Authorization': 'Bearer ' + STRIPE_SECRET_KEY,
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: params
-          });
-          const directData = await directRes.json();
-          if (directData.client_secret) {
-            clientSecret = directData.client_secret;
-          } else if (directData.error) {
-            throw new Error(directData.error.message);
-          }
-        }
+        const clientSecret = intentData.client_secret;
 
         if (!clientSecret) {
           throw new Error('No se pudo generar la sesión de pago con Stripe.');
