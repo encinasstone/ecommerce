@@ -627,6 +627,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (openAdvisorBtn) {
     openAdvisorBtn.addEventListener('click', () => {
       const msg = `¡Hola Encinas Stone! Deseo ponerme en contacto con un Asesor Encinas para consultar opciones de personalización de mi mesa de comedor.`;
+      if (window.fbq && !IS_TEST) window.fbq('track', 'Contact', { content_name: 'Asesor Encinas - Mesas' });
       window.open(`https://wa.me/${OFFICIAL_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
     });
   }
@@ -796,6 +797,14 @@ document.addEventListener('DOMContentLoaded', () => {
         `💰 PRECIO DE COMPRA TOTAL: ${formatMoney(calculateTotal())}\n\n` +
         `¿Me ayudan a confirmar mi pedido?`;
 
+      // Pedido armado por WhatsApp: es la conversión principal fuera del pago con tarjeta
+      if (window.fbq && !IS_TEST) {
+        window.fbq('track', 'Lead', {
+          value: calculateTotal(),
+          currency: 'MXN',
+          content_name: `Pedido WhatsApp - Mesa ${state.capacity} Personas`
+        });
+      }
       window.open(`https://wa.me/${OFFICIAL_WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank');
       quoteModal.classList.remove('active');
       quoteForm.reset();

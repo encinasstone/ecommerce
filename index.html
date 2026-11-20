@@ -369,6 +369,7 @@
       const openAdvisorBtn = document.getElementById('open-advisor-btn');
       if (openAdvisorBtn) {
         openAdvisorBtn.addEventListener('click', () => {
+          if (window.fbq) window.fbq('track', 'Contact', { content_name: 'Asesor Encinas - Inicio' });
           window.open('https://wa.me/526624134300?text=' + encodeURIComponent('¡Hola Encinas Stone! Deseo consultar información sobre proyectos de carpintería y cubiertas.'), '_blank');
         });
       }
@@ -376,6 +377,7 @@
       const btnCustomProject = document.getElementById('btn-custom-project');
       if (btnCustomProject) {
         btnCustomProject.addEventListener('click', () => {
+          if (window.fbq) window.fbq('track', 'Contact', { content_name: 'Cotizar Proyecto Especial' });
           window.open('https://wa.me/526624134300?text=' + encodeURIComponent('¡Hola Encinas Stone! Me gustaría cotizar un proyecto especial de carpintería o cubierta sobre diseño.'), '_blank');
         });
       }

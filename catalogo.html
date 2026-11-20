@@ -173,6 +173,7 @@
     }
 
     document.getElementById('open-advisor-btn').addEventListener('click', () => {
+      if (window.fbq) window.fbq('track', 'Contact', { content_name: 'Asesor Encinas - Catalogo' });
       window.open('https://wa.me/526624134300?text=' + encodeURIComponent('¡Hola Encinas Stone! Deseo consultar información sobre el catálogo de muebles.'), '_blank');
     });
   </script>

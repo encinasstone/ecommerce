@@ -202,6 +202,7 @@
     }
 
     document.getElementById('open-advisor-btn').addEventListener('click', () => {
+      if (window.fbq) window.fbq('track', 'Contact', { content_name: 'Asesor Encinas - Materiales' });
       window.open('https://wa.me/526624134300?text=' + encodeURIComponent('¡Hola Encinas Stone! Deseo consultar muestras de materiales y piedras.'), '_blank');
     });
   </script>
