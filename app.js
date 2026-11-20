@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       stripeCardElement = stripeElements.create('card', {
         style: {
           base: {
-            fontSize: '15px',
+            fontSize: '16px',
             color: '#250016',
             fontFamily: "'Inter', sans-serif",
             fontWeight: '500',
