@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Resolve Asset Paths
   const getRenderPaths = () => {
     const view = state.currentView;
-    const fondoPath = `assets/FONDOS/${view} FONDO.png`;
+    const fondoPath = `assets/FONDOS/${view} FONDO.webp`;
 
     let lambrinText = '';
     if (state.disenoCode === 'LAMBRIN') {
@@ -294,13 +294,13 @@ document.addEventListener('DOMContentLoaded', () => {
         lambrinText = ' LAMBRIN';
       }
     }
-    const basePath = `assets/BASES/${view} ${state.baseCode}${lambrinText}.png`;
-    const stonePath = `assets/CUBIERTAS/${view} ${state.stoneCode}.png`;
-    const dimensionLargoPath = `assets/CUBIERTAS/Largo ${state.capacity} personas.png`;
+    const basePath = `assets/BASES/${view} ${state.baseCode}${lambrinText}.webp`;
+    const stonePath = `assets/CUBIERTAS/${view} ${state.stoneCode}.webp`;
+    const dimensionLargoPath = `assets/CUBIERTAS/Largo ${state.capacity} personas.webp`;
     
     const dimensionAnchoPath = state.capacity === 4 
-      ? `assets/CUBIERTAS/Ancho 4 personas.png`
-      : `assets/CUBIERTAS/ancho ${state.capacity} personas.png`;
+      ? `assets/CUBIERTAS/Ancho 4 personas.webp`
+      : `assets/CUBIERTAS/ancho ${state.capacity} personas.webp`;
 
     return { fondoPath, basePath, stonePath, dimensionLargoPath, dimensionAnchoPath };
   };
@@ -464,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const preloadLayerAssets = () => {
     ['AMPLIA', 'PICADA', 'BAJA'].forEach(v => {
       const img = new Image();
-      img.src = `assets/FONDOS/${v} FONDO.png`;
+      img.src = `assets/FONDOS/${v} FONDO.webp`;
     });
   };
 
