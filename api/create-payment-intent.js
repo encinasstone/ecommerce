@@ -45,9 +45,19 @@ const ALLOWED_ORIGINS = [
 const clean = (v, max = 200) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const has = (obj, key) => Object.prototype.hasOwnProperty.call(obj, key);
 
+// Acepta el dominio oficial y también la misma URL donde está publicada la página
+// (así funcionan las versiones de prueba de Vercel), pero no otros sitios.
+const isAllowedOrigin = (origin, req) => {
+  if (!origin) return true;
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  const host = req.headers['x-forwarded-host'] || req.headers.host;
+  try { return new URL(origin).host === host; } catch (e) { return false; }
+};
+
 export default async function handler(req, res) {
   const origin = req.headers.origin;
-  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+  const originOk = isAllowedOrigin(origin, req);
+  if (origin && originOk) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Vary', 'Origin');
   }
@@ -62,7 +72,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: { message: 'Método no permitido' } });
   }
 
-  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+  if (!originOk) {
     return res.status(403).json({ error: { message: 'Origen no permitido' } });
   }
 
