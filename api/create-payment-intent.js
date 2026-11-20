@@ -102,7 +102,15 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: { message: 'Faltan datos de contacto o de entrega.' } });
     }
 
-    const totalMXN = matrix.basePrice + matrix.cubiertas[stoneCode] + matrix.bases[baseCode] + matrix.diseno[disenoCode];
+    let totalMXN = matrix.basePrice + matrix.cubiertas[stoneCode] + matrix.bases[baseCode] + matrix.diseno[disenoCode];
+    const esPrueba = body.prueba === true;
+    if (esPrueba) {
+      // Solo en versiones de prueba de Vercel; en producción se rechaza
+      if (process.env.VERCEL_ENV !== 'preview') {
+        return res.status(400).json({ error: { message: 'Modo de prueba no disponible.' } });
+      }
+      totalMXN = 50;
+    }
     const amount = totalMXN * 100; // Stripe usa centavos
 
     const modelo = `Mesa ${capacity} Personas (${matrix.dimensions})`;
@@ -110,7 +118,7 @@ export default async function handler(req, res) {
     params.append('amount', String(amount));
     params.append('currency', 'mxn');
     params.append('payment_method_types[]', 'card');
-    params.append('description', `Orden Encinas Stone: ${modelo} (${name})`);
+    params.append('description', `${esPrueba ? '[PRUEBA] ' : ''}Orden Encinas Stone: ${modelo} (${name})`);
     const metadata = {
       cliente: name,
       telefono: phone,
@@ -120,7 +128,8 @@ export default async function handler(req, res) {
       acabado_base: NOMBRES.bases[baseCode],
       diseno_base: NOMBRES.diseno[disenoCode],
       cubierta: `${NOMBRES.cubiertas[stoneCode]} (20 mm / 40 mm vista)`,
-      total_mxn: String(totalMXN)
+      total_mxn: String(totalMXN),
+      prueba: esPrueba ? 'si' : 'no'
     };
     Object.keys(metadata).forEach(k => params.append(`metadata[${k}]`, metadata[k]));
 

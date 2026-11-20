@@ -263,8 +263,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }).format(amount) + ' MXN';
   };
 
+  // Modo prueba: agregar ?prueba a la URL de la versión de prueba de Vercel cobra $50.
+  // En encinasstone.com no se activa, y el servidor de producción lo rechaza.
+  const IS_TEST = new URLSearchParams(window.location.search).has('prueba') &&
+    !window.location.hostname.endsWith('encinasstone.com');
+  const TEST_AMOUNT = 50;
+
   // Calculate Total Price
   const calculateTotal = () => {
+    if (IS_TEST) return TEST_AMOUNT;
     const matrix = PRICING_MATRIX[state.capacity];
     const baseTable = matrix.basePrice;
     const stoneUpsell = matrix.cubiertas[state.stoneCode] || 0;
@@ -540,7 +547,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(mountStripeCard, 100);
 
       // Trigger Meta Pixel InitiateCheckout Event
-      if (window.fbq) {
+      if (window.fbq && !IS_TEST) {
         window.fbq('track', 'InitiateCheckout', {
           value: calculateTotal(),
           currency: 'MXN',
@@ -669,7 +676,8 @@ document.addEventListener('DOMContentLoaded', () => {
             name: name,
             phone: phone,
             city: city,
-            address: address
+            address: address,
+            prueba: IS_TEST
           })
         });
 
@@ -710,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const totalAmount = formatMoney(calculateTotal());
 
           // Trigger Meta Pixel Purchase Event
-          if (window.fbq) {
+          if (window.fbq && !IS_TEST) {
             window.fbq('track', 'Purchase', {
               value: calculateTotal(),
               currency: 'MXN',
