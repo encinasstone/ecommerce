@@ -269,6 +269,30 @@ document.addEventListener('DOMContentLoaded', () => {
     !window.location.hostname.endsWith('encinasstone.com');
   const TEST_AMOUNT = 50;
 
+  // Google Analytics 4: datos de la mesa configurada (se ven en los informes como parámetros)
+  const gaMesa = () => {
+    const total = calculateTotal();
+    return {
+      currency: 'MXN',
+      value: total,
+      mesa_tamano: `${state.capacity} personas`,
+      mesa_base: state.baseName,
+      mesa_diseno: state.disenoName,
+      mesa_cubierta: state.stoneName,
+      items: [{
+        item_id: `MESA-${state.capacity}`,
+        item_name: `Mesa ${state.capacity} Personas`,
+        item_category: 'Mesas de comedor',
+        item_variant: `${state.baseName} ${state.disenoName} / ${state.stoneName}`,
+        price: total,
+        quantity: 1
+      }]
+    };
+  };
+  const gaEvent = (name, params) => {
+    if (window.gtag && !IS_TEST) window.gtag('event', name, params);
+  };
+
   // Calculate Total Price
   const calculateTotal = () => {
     if (IS_TEST) return TEST_AMOUNT;
@@ -546,6 +570,8 @@ document.addEventListener('DOMContentLoaded', () => {
       quoteModal.classList.add('active');
       setTimeout(mountStripeCard, 100);
 
+      gaEvent('begin_checkout', gaMesa());
+
       // Trigger Meta Pixel InitiateCheckout Event
       if (window.fbq && !IS_TEST) {
         window.fbq('track', 'InitiateCheckout', {
@@ -628,6 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openAdvisorBtn.addEventListener('click', () => {
       const msg = `¡Hola Encinas Stone! Deseo ponerme en contacto con un Asesor Encinas para consultar opciones de personalización de mi mesa de comedor.`;
       if (window.fbq && !IS_TEST) window.fbq('track', 'Contact', { content_name: 'Asesor Encinas - Mesas' });
+      gaEvent('contact', { method: 'whatsapp', boton: 'Asesor Encinas - Mesas' });
       window.open(`https://wa.me/${OFFICIAL_WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
     });
   }
@@ -718,6 +745,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const orderId = `#ENC-${Math.floor(10000 + Math.random() * 90000)}`;
           const totalAmount = formatMoney(calculateTotal());
 
+          gaEvent('purchase', { ...gaMesa(), transaction_id: result.paymentIntent.id });
+
           // Trigger Meta Pixel Purchase Event
           if (window.fbq && !IS_TEST) {
             window.fbq('track', 'Purchase', {
@@ -796,6 +825,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `• Tiempo de Entrega: 15 Días\n` +
         `💰 PRECIO DE COMPRA TOTAL: ${formatMoney(calculateTotal())}\n\n` +
         `¿Me ayudan a confirmar mi pedido?`;
+
+      gaEvent('generate_lead', { ...gaMesa(), lead_source: 'pedido_whatsapp' });
 
       // Pedido armado por WhatsApp: es la conversión principal fuera del pago con tarjeta
       if (window.fbq && !IS_TEST) {

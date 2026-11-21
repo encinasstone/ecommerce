@@ -52,6 +52,17 @@
   src="https://www.facebook.com/tr?id=2219333765612145&ev=PageView&noscript=1"
   /></noscript>
   <!-- End Meta Pixel Code -->
+
+  <!-- Google Analytics 4 (propiedad "Encinas Stone", solo en el dominio oficial) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V630FHVQD2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    if (/(^|\.)encinasstone\.com$/.test(location.hostname)) {
+      gtag('js', new Date());
+      gtag('config', 'G-V630FHVQD2');
+    }
+  </script>
 </head>
 <body>
 
@@ -176,6 +187,7 @@
 
     document.getElementById('open-advisor-btn').addEventListener('click', () => {
       if (window.fbq) window.fbq('track', 'Contact', { content_name: 'Asesor Encinas - Proceso' });
+      if (window.gtag) window.gtag('event', 'contact', { method: 'whatsapp', boton: 'Asesor Encinas - Proceso' });
       window.open('https://wa.me/526624134300?text=' + encodeURIComponent('¡Hola Encinas Stone! Deseo consultar información sobre su proceso artesanal.'), '_blank');
     });
   </script>
